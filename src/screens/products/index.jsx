@@ -9,14 +9,31 @@ import PRODUCTS from '../../constants/data/products.json';
 const Product = ({ onHandleGoBack, categoryId }) => {
   const [search, setSearch] = useState('');
   const [borderColor, setBorderColor] = useState(COLORS.primary);
+  const [FilteredProducts, setFilteredProducts] = useState('');
 
   const onHandleFocus = () => {};
   const onHandleChangeText = text => {
     setSearch(text);
+    filterBySearch(text);
   };
   const onHandleBlur = () => {};
 
-  const filterProducts = PRODUCTS.filter(product => product.categoryId === categoryId);
+  const clearSearch = () => {
+    setSearch('');
+    setFilteredProducts([]);
+  };
+
+  const filteredProductsByCategory = PRODUCTS?.filter(product => product.categoryId === categoryId);
+
+  const filterBySearch = query => {
+    let updatedProductList = [...filteredProductsByCategory];
+
+    updatedProductList = updatedProductList.filter(product => {
+      return product.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    });
+
+    setFilteredProducts(updatedProductList);
+  };
 
   return (
     <View style={styles.container}>
@@ -33,14 +50,21 @@ const Product = ({ onHandleGoBack, categoryId }) => {
           placeholder='Search'
           borderColor={borderColor}
         />
-        <Ionicons name='search-circle' size={35} color='black' />
-        {search.length > 0 && <Ionicons name='close-circle' size={35} color='black' />}
+        {search.length > 0 && (
+          <Ionicons onPress={clearSearch} name='close-circle' size={35} color='black' />
+        )}
       </View>
       <FlatList
-        data={filterProducts}
+        style={styles.products}
+        data={search?.length > 0 ? FilteredProducts : filteredProductsByCategory}
         renderItem={({ item }) => <Text>{item.name}</Text>}
         keyExtractor={item => item.id.toString()}
       />
+      {FilteredProducts.length === 0 && search.length > 0 && (
+        <View style={styles.notFound}>
+          <Text style={styles.notFoundText}>No products found</Text>
+        </View>
+      )}
     </View>
   );
 };

@@ -23,4 +23,17 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.text,
   },
+  products: {
+    flex: 1,
+  },
+  notFound: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  notFoundText: {},
+  clearIcon: {
+    position: 'absolute',
+    zIndex: 2,
+    right: 5,
+  },
 });
