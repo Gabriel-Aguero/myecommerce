@@ -1,5 +1,5 @@
 import { StatusBar, StyleSheet } from 'react-native';
-import { COLORS } from '../../theme';
+import { COLORS, FONTS } from '../../theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,5 +12,26 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color: COLORS.text,
+    fontFamily: FONTS.bold,
+  },
+  tabletContainer: {
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: COLORS.primary,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+  tabletTitle: {
+    fontSize: 35,
+    color: COLORS.text,
+    fontFamily: FONTS.bold,
   },
 });

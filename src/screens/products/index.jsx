@@ -1,4 +1,4 @@
-import { View, Button, TouchableOpacity, Text, FlatList, ImageBackground } from 'react-native';
+import { View, TouchableOpacity, Text, FlatList, ImageBackground } from 'react-native';
 import { styles } from './styles';
 import { Input } from '../../components';
 import { useState } from 'react';
