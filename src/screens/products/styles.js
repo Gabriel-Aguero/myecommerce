@@ -7,21 +7,12 @@ export const styles = StyleSheet.create({
     marginHorizontal: 20,
     gap: 10,
     marginVertical: 10,
+    marginTop: 20,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  goBack: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    gap: 5,
-  },
-  goBackText: {
-    fontSize: 14,
-    color: COLORS.text,
   },
   products: {
     flex: 1,

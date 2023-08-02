@@ -1,16 +1,13 @@
-import { FlatList, SafeAreaView, StyleSheet, View, ActivityIndicator } from 'react-native';
-import { Header, CategoryItem } from './components';
-import CATEGORIES from './constants/data/categories.json';
 import { useFonts } from 'expo-font';
-import { Categories, Product } from './screens';
-import { useState } from 'react';
-import { Button } from 'react-native';
-import { COLORS, FONTS } from './theme';
+import { SafeAreaView, StyleSheet, View, ActivityIndicator } from 'react-native';
 
-const categoryDefaults = {
-  categoryId: null,
-  color: COLORS.primary,
-};
+import { COLORS, FONTS } from './theme';
+import RootNavigator from './navigations';
+
+// const categoryDefaults = {
+//   categoryId: null,
+//   color: COLORS.primary,
+// };
 
 export default function App() {
   const [loaded] = useFonts({
@@ -20,20 +17,20 @@ export default function App() {
     [FONTS.light]: require('../assets/fonts/Inter-Light.ttf'),
   });
 
-  const [isCategorySelected, setIsCategorySelected] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(categoryDefaults);
+  // const [isCategorySelected, setIsCategorySelected] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState(categoryDefaults);
 
-  const headerTitle = isCategorySelected ? 'Products' : 'Categories';
+  // const headerTitle = isCategorySelected ? 'Products' : 'Categories';
 
-  const onHandleSelectedCategory = ({ categoryId, color }) => {
-    setSelectedCategory({ categoryId, color });
-    setIsCategorySelected(!isCategorySelected);
-  };
+  // const onHandleSelectedCategory = ({ categoryId, color }) => {
+  //   setSelectedCategory({ categoryId, color });
+  //   setIsCategorySelected(!isCategorySelected);
+  // };
 
-  const onHandleNavigate = () => {
-    setIsCategorySelected(!isCategorySelected);
-    setSelectedCategory(categoryDefaults);
-  };
+  // const onHandleNavigate = () => {
+  //   setIsCategorySelected(!isCategorySelected);
+  //   setSelectedCategory(categoryDefaults);
+  // };
 
   if (!loaded) {
     return (
@@ -45,19 +42,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <Header
-          title={headerTitle}
-          style={{
-            backgroundColor: selectedCategory.color,
-          }}
-        />
-        {isCategorySelected ? (
-          <Product onHandleGoBack={onHandleNavigate} categorySelected={selectedCategory} />
-        ) : (
-          <Categories onSelectCategory={onHandleSelectedCategory} />
-        )}
-      </View>
+      <RootNavigator />
     </SafeAreaView>
   );
 }

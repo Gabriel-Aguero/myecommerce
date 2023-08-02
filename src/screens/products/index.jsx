@@ -6,7 +6,8 @@ import { COLORS } from '../../theme';
 import { Ionicons } from '@expo/vector-icons';
 import PRODUCTS from '../../constants/data/products.json';
 
-const Product = ({ onHandleGoBack, categorySelected }) => {
+const Product = ({ navigation, route }) => {
+  const { categoryId, color } = route.params;
   const [search, setSearch] = useState('');
   const [borderColor, setBorderColor] = useState(COLORS.primary);
   const [FilteredProducts, setFilteredProducts] = useState('');
@@ -23,9 +24,7 @@ const Product = ({ onHandleGoBack, categorySelected }) => {
     setFilteredProducts([]);
   };
 
-  const filteredProductsByCategory = PRODUCTS?.filter(
-    product => product.categoryId === categorySelected.categoryId
-  );
+  const filteredProductsByCategory = PRODUCTS?.filter(product => product.categoryId === categoryId);
 
   const filterBySearch = query => {
     let updatedProductList = [...filteredProductsByCategory];
@@ -39,10 +38,6 @@ const Product = ({ onHandleGoBack, categorySelected }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.goBack} title='go back' onPress={onHandleGoBack}>
-        <Ionicons name='arrow-back-circle' size={24} color='black' onPress={onHandleGoBack} />
-        <Text style={styles.goBackText}>Go back</Text>
-      </TouchableOpacity>
       <View style={styles.header}>
         <Input
           onHandleBlur={onHandleBlur}
@@ -69,7 +64,7 @@ const Product = ({ onHandleGoBack, categorySelected }) => {
           <TouchableOpacity onPress={() => null} style={styles.productContainer}>
             <ImageBackground
               source={{ uri: item.image }}
-              style={[styles.productImage, { backgroundColor: categorySelected.color }]}
+              style={[styles.productImage, { backgroundColor: color }]}
               resizeMethod='resize'
               resizeMode='contain'
             />
