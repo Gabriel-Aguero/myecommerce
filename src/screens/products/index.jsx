@@ -10,7 +10,7 @@ const Product = ({ navigation, route }) => {
   const { categoryId, color } = route.params;
   const [search, setSearch] = useState('');
   const [borderColor, setBorderColor] = useState(COLORS.primary);
-  const [FilteredProducts, setFilteredProducts] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState('');
 
   const onHandleFocus = () => {};
   const onHandleChangeText = text => {
@@ -22,6 +22,10 @@ const Product = ({ navigation, route }) => {
   const clearSearch = () => {
     setSearch('');
     setFilteredProducts([]);
+  };
+
+  const onSelectProduct = ({ productId, name }) => {
+    navigation.navigate('ProductDetail', { productId, color, name });
   };
 
   const filteredProductsByCategory = PRODUCTS?.filter(product => product.categoryId === categoryId);
@@ -59,9 +63,11 @@ const Product = ({ navigation, route }) => {
       </View>
       <FlatList
         style={styles.products}
-        data={search?.length > 0 ? FilteredProducts : filteredProductsByCategory}
+        data={search?.length > 0 ? filteredProducts : filteredProductsByCategory}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => null} style={styles.productContainer}>
+          <TouchableOpacity
+            onPress={() => onSelectProduct({ productId: item.id, name: item.name })}
+            style={styles.productContainer}>
             <ImageBackground
               source={{ uri: item.image }}
               style={[styles.productImage, { backgroundColor: color }]}
@@ -81,7 +87,7 @@ const Product = ({ navigation, route }) => {
         numColumns={2}
         showsVerticalScrollIndicator={false}
       />
-      {FilteredProducts.length === 0 && search.length > 0 && (
+      {filteredProducts.length === 0 && search.length > 0 && (
         <View style={styles.notFound}>
           <Text style={styles.notFoundText}>No products found</Text>
         </View>

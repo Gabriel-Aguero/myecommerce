@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Categories, Product } from '../screens';
-import { CardStyleInterpolators } from '@react-navigation/stack';
+import { Categories, Product, ProductDetail } from '../screens';
+import { TransitionPresets } from '@react-navigation/stack';
 import { COLORS, FONTS } from '../theme';
 import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,15 +18,16 @@ const ShopNavigator = () => {
     <Stack.Navigator
       initialRouteName='Categories'
       screenOptions={{
-        presentation: 'card',
         headerStyle: {
           backgroundColor: COLORS.primary,
+          height: 80,
         },
         headerTitleStyle: {
           fontFamily: FONTS.bold,
           fontsize: 16,
         },
         headerTintColor: COLORS.white,
+        animation: 'slide_from_left',
       }}>
       <Stack.Screen name='Categories' component={Categories} />
       <Stack.Screen
@@ -41,9 +42,29 @@ const ShopNavigator = () => {
               style={styles.goBack}
               onPress={() => navigation.goBack()}
               title='go back'>
-              <Ionicons name='arrow-back-circle' size={24} color='black' />
+              <Ionicons name='arrow-back-circle' size={24} color={COLORS.white} />
             </TouchableOpacity>
           ),
+          title: route.params.name,
+        })}
+      />
+      <Stack.Screen
+        name='ProductDetail'
+        component={ProductDetail}
+        options={({ navigation, route }) => ({
+          headerStyle: {
+            backgroundColor: route.params.color,
+            marginTop: 20,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.goBack}
+              onPress={() => navigation.goBack()}
+              title='go back'>
+              <Ionicons name='arrow-back-circle' size={24} color={COLORS.white} />
+            </TouchableOpacity>
+          ),
+          title: route.params.name,
         })}
       />
     </Stack.Navigator>
